@@ -12,7 +12,7 @@ class Mickey{
 		const currentFrame = this.animator.currentFrame();
 		if (this.x > 1024) 
 		{
-			this.x = 0;
+			this.x = -66;
 		}
 		else if (currentFrame > 3)
 		{
