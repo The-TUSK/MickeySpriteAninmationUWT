@@ -1,5 +1,7 @@
 class Automata {
     constructor(game) {
+        Object.assign(this, { game });
+
         this.automata = [];
         this.height = 100;
         this.width = 200;
@@ -26,6 +28,16 @@ class Automata {
             }
         }
     };
+
+    count(col, row) {
+        let count = 0;
+        for (let i = -1; i < 2; i++) {
+            for (let j = -1; j < 2; j++) {
+                if ((i || j) && this.automata[col + i] && this.automata[col + i][row + j]) count++;
+            }
+        }
+        return count;
+    };
     
     update() {
         this.speed = parseInt(document.getElementById("speed").value, 10);
@@ -51,7 +63,7 @@ class Automata {
             }
             this.automata = next;
         }
-    }
+    };
 
     draw(ctx){
         let size = 8;
