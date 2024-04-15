@@ -8,7 +8,24 @@ class Automata {
         this.ticks = 0;
 
         this.speed = parseInt(document.getElementById("speed").value, 10);
+        
+        for (let col = 0; col < this.width; col++) {
+            this.automata.push([]);
+            for (let row = 0; row < this.height; row++) {
+                this.automata[col][row] = 0;
+            }
+        }
+
+        this.loadRandomAutomata();
     }
+
+    loadRandomAutomata() {
+        for (let col = 0; col < this.width; col++) {
+            for (let row = 0; row < this.height; row++) {
+                this.automata[col][row] = randomInt(2);
+            }
+        }
+    };
     
     update() {
         this.speed = parseInt(document.getElementById("speed").value, 10);

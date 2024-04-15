@@ -11,5 +11,6 @@ ASSET_MANAGER.downloadAll(() => {
 
 	gameEngine.init(ctx);
 	
+	gameEngine.addEntity(new Automata(gameEngine));
 	gameEngine.start();
 });
