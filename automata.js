@@ -29,6 +29,7 @@ class Automata {
         }
     };
 
+    //count neighbors?
     count(col, row) {
         let count = 0;
         for (let i = -1; i < 2; i++) {
@@ -46,7 +47,8 @@ class Automata {
             this.tickCount = 0;
             this.ticks++;
             document.getElementById('ticks').innerHTML = "Ticks: " + this.ticks;
-
+            
+            //Initialize next 2D array / Automata
             let next = [];
             for (let col = 0; col < this.width; col++) {
                 next.push([]);
@@ -54,7 +56,8 @@ class Automata {
                     next[col].push(0);
                 }
             }
-
+            
+            //Check neighbors
             for (let col = 0; col < this.width; col++) {
                 for (let row = 0; row < this.height; row++) {
                     if (this.automata[col][row] && (this.count(col, row) === 2 || this.count(col, row) === 3)) next[col][row] = 1;
