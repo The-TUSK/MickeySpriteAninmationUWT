@@ -5,6 +5,7 @@ class GameEngine {
         // What you will use to draw
         // Documentation: https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D
         this.ctx = null;
+        this.isPaused = false;
 
         // Everything that will be updated and drawn each frame
         this.entities = [];
@@ -74,6 +75,16 @@ class GameEngine {
 
         this.ctx.canvas.addEventListener("keydown", event => this.keys[event.key] = true);
         this.ctx.canvas.addEventListener("keyup", event => this.keys[event.key] = false);
+
+        // add a events to pause
+        document.getElementById('pauseButton').addEventListener('click', () => {
+            this.isPaused = !this.isPaused;
+            if (this.isPaused) {
+                document.getElementById('pauseButton').innerText = 'Resume';
+            } else {
+                document.getElementById('pauseButton').innerText = 'Pause';
+            }
+        });
     };
 
     addEntity(entity) {
@@ -91,27 +102,30 @@ class GameEngine {
     };
 
     update() {
-        let entitiesCount = this.entities.length;
-
-        for (let i = 0; i < entitiesCount; i++) {
-            let entity = this.entities[i];
-
-            if (!entity.removeFromWorld) {
-                entity.update();
+        if (!this.isPaused){
+            let entitiesCount = this.entities.length;
+            for (let i = 0; i < entitiesCount; i++) {
+                let entity = this.entities[i];
+    
+                if (!entity.removeFromWorld) {
+                    entity.update();
+                }
             }
-        }
-
-        for (let i = this.entities.length - 1; i >= 0; --i) {
-            if (this.entities[i].removeFromWorld) {
-                this.entities.splice(i, 1);
-            }
+    
+            for (let i = this.entities.length - 1; i >= 0; --i) {
+                if (this.entities[i].removeFromWorld) {
+                    this.entities.splice(i, 1);
+                }
+            }  
         }
     };
 
     loop() {
-        this.clockTick = this.timer.tick();
-        this.update();
-        this.draw();
+        if (!this.isPaused){
+            this.clockTick = this.timer.tick();
+            this.update();
+            this.draw();
+        }
     };
 
 };
